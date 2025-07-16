@@ -1,16 +1,40 @@
 package com.example.demo.student;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+
+
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "student")
 public class Student {
+
+    @Id
+    @SequenceGenerator(
+            name = "student_sequence",
+            sequenceName = "student_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "student_sequence"
+    )
     private Long id;
+
     private String name;
     private Integer age;
     private LocalDate dob;
     private String email;
 
-    public Student() {
-    }
+    // Default constructor
+    public Student() {}
 
+    // Constructor with ID (usually used internally)
     public Student(Long id, String name, Integer age, LocalDate dob, String email) {
         this.id = id;
         this.name = name;
@@ -19,12 +43,15 @@ public class Student {
         this.email = email;
     }
 
+    // Constructor without ID (for creating new entities)
     public Student(String name, Integer age, LocalDate dob, String email) {
         this.name = name;
         this.age = age;
         this.dob = dob;
         this.email = email;
     }
+
+    // Getters and setters for all fields
 
     public Long getId() {
         return id;
@@ -65,6 +92,8 @@ public class Student {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    // toString method for debugging/logging
 
     @Override
     public String toString() {
