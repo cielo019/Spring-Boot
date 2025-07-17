@@ -1,11 +1,7 @@
 package com.example.demo.student;
+import java.time.Period;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 
 
 import java.time.LocalDate;
@@ -27,26 +23,26 @@ public class Student {
     private Long id;
 
     private String name;
-    private Integer age;
     private LocalDate dob;
     private String email;
+
+    @Transient
+    private Integer age;
 
     // Default constructor
     public Student() {}
 
     // Constructor with ID (usually used internally)
-    public Student(Long id, String name, Integer age, LocalDate dob, String email) {
+    public Student(Long id, String name,LocalDate dob, String email) {
         this.id = id;
         this.name = name;
-        this.age = age;
         this.dob = dob;
         this.email = email;
     }
 
     // Constructor without ID (for creating new entities)
-    public Student(String name, Integer age, LocalDate dob, String email) {
+    public Student(String name, LocalDate dob, String email) {
         this.name = name;
-        this.age = age;
         this.dob = dob;
         this.email = email;
     }
@@ -70,7 +66,7 @@ public class Student {
     }
 
     public Integer getAge() {
-        return age;
+        return Period.between(this.dob,LocalDate.now()).getYears();
     }
 
     public void setAge(Integer age) {
